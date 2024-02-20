@@ -22,10 +22,12 @@ def main():
         elif input_type == "username":
             request = youtube.channels().list(
                 part='snippet, contentDetails, statistics',
-                username=channel_info)
+                forUsername=channel_info)
         elif input_type == "handle":
             # TODO: Look up a YT user by their handle, e.g. @BerkeleyNews
-            pass
+            request = youtube.channels().list(
+                part='snippet, contentDetails, statistics',
+                forHandle=channel_info)
         response = request.execute()
         if 'items' not in response: # No channels found
             return None
@@ -40,6 +42,11 @@ def main():
         return all_data
     
     # TODO: Create pdfs based on the data for the channels
+
+    # Initial Test
+    x = get_channel_stats(youtube, "BerkeleyNews", "username") 
+    print(x)
+
     
 if __name__ == '__main__':
     main()
